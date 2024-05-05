@@ -61,7 +61,8 @@ void Fecha::Cargar()
     cout<<"ANIO: ";
     cin>>anio;
 }
-///ACA EMPIEZA LO RELACIONADO A TARJETA
+
+///ACA EMPIEZAN LAS CLASES
 class Tarjeta
 {
     private:
@@ -99,6 +100,186 @@ class Tarjeta
         void Mostrar();
 };
 
+class ArchivoTarjetas
+{
+    private:
+        char nombre[30];
+    public:
+    ///CONSTRUCTOR: INICIALIZAR EL ARCHIVO CON EL NOMBRE QUE PASAMOS POR PARAMETRO
+        ArchivoTarjetas(const char * n = "Tarjetas.dat"){strcpy(nombre, n);}
+    ///METODOS DE LA CLASE (QUE ACCIONES VA A REALIZAR EL ARCHIVO QUE MANIPULA LAS TARJETAS)
+        bool grabarRegistro(Tarjeta obj);
+        Tarjeta leerRegistro(int pos);
+        int buscarRegistro(int num);
+        int contarRegistros();
+        bool modificarRegistro(Tarjeta obj, int pos);
+        bool listarRegistros();
+};
+
+class Viaje
+{
+    private:
+        int NroViaje;
+        int NroTarjeta;
+        int MedioTransporte;
+        Fecha FechaDelViaje;
+        float ImporteDelViaje;
+        bool Estado;
+        int cuantosViajesPorTransporte[3] = {};
+        float acuImporteTotalMeses[12] = {};
+    public:
+    ///CONSTRUCTOR
+        Viaje(int NroViaje = 0, int NroTarjeta = 0, int MedioTransporte = 0, Fecha f = Fecha(), float ImporteDelViaje = 0, bool Estado = true)
+        {
+            this->NroViaje = 0;
+            this->NroTarjeta = 0;
+            this->MedioTransporte = 0;
+            this->FechaDelViaje = f;
+            this->ImporteDelViaje = 0;
+            this->Estado = true;
+        }
+    ///SETTERS
+        void setNroViaje(int nroViaje){NroViaje = nroViaje;}
+        void setNroTarjeta(int nroTarjeta){NroTarjeta = nroTarjeta;}
+        void setMedioTransporte(int medioTransporte){MedioTransporte = medioTransporte;}
+        void setFechaDelViaje(Fecha fechaDelViaje){FechaDelViaje = fechaDelViaje;}
+        void setImporteDelViaje(float importeDelViaje){ImporteDelViaje = importeDelViaje;}
+        void setEstado(bool estado){Estado = estado;}
+
+    ///GETTERS
+        int getNroViaje(){return NroViaje;}
+        int getNroTarjeta(){return NroTarjeta;}
+        int getMedioTransporte(){return MedioTransporte;}
+        Fecha getFechaDelViaje(){return FechaDelViaje;}
+        float getImporteDelViaje(){return ImporteDelViaje;}
+        bool getEstado(){return Estado;}
+
+    ///METODOS
+        void Cargar();
+        void Mostrar();
+        void CuantosViajesEnCadaTransporte(Viaje obj, int numero);
+};
+
+class ArchivoViajes
+{
+    private:
+        char nombre[30];
+        float acuImporteTotalMesesDelArchivo[12] = {};
+    public:
+        ///CONSTRUCTOR: INICIALIZAR EL ARCHIVO CON EL NOMBRE QUE PASAMOS POR PARAMETRO
+        ArchivoViajes(const char *n = "Viajes.dat"){strcpy(nombre, n);}
+        ///METODOS DE LA CLASE (QUE ACCIONES VA A REALIZAR EL ARCHIVO QUE MANIPULA LOS VIAJES)
+        bool grabarRegistro(Viaje obj);
+        Viaje leerRegistro(int pos);
+        int buscarRegistro(int num);
+        int contarRegistros();
+        bool modificarRegistro(Viaje obj, int pos);
+        bool listarRegistros();
+        int buscarRegistroPorNumeroDeTarjeta(int num);
+        void ViajeConMenorImporte();
+        /*void AcumularImporteEnMeses(int mes, float importeDelMes);
+        void MostrarMesMayorRecaudacion(ArchivoViajes obj); */ ///NO PUDE HACERLO
+};
+
+class ViajeAnioActual
+{
+    private:
+        int NroViaje;
+        int NroTarjeta;
+        int MedioTransporte;
+        Fecha FechaDelViaje;
+        float ImporteDelViaje;
+        bool Estado;
+        //int cuantosViajesPorTransporte[3] = {};
+        //float acuImporteTotalMeses[12] = {};
+    public:
+    ///CONSTRUCTOR
+        ViajeAnioActual(int NroViaje = 0, int NroTarjeta = 0, int MedioTransporte = 0, Fecha f = Fecha(), float ImporteDelViaje = 0, bool Estado = true)
+        {
+            NroViaje = 0;
+            NroTarjeta = 0;
+            MedioTransporte = 0;
+            FechaDelViaje = f;
+            ImporteDelViaje = 0;
+            Estado = true;
+        }
+    ///SETTERS
+        void setNroViaje(int nroViaje){NroViaje = nroViaje;}
+        void setNroTarjeta(int nroTarjeta){NroTarjeta = nroTarjeta;}
+        void setMedioTransporte(int medioTransporte){MedioTransporte = medioTransporte;}
+        void setFechaDelViaje(Fecha fechaDelViaje){FechaDelViaje = fechaDelViaje;}
+        void setImporteDelViaje(float importeDelViaje){ImporteDelViaje = importeDelViaje;}
+        void setEstado(bool estado){Estado = estado;}
+
+    ///GETTERS
+        int getNroViaje(){return NroViaje;}
+        int getNroTarjeta(){return NroTarjeta;}
+        int getMedioTransporte(){return MedioTransporte;}
+        Fecha getFechaDelViaje(){return FechaDelViaje;}
+        float getImporteDelViaje(){return ImporteDelViaje;}
+        bool getEstado(){return Estado;}
+
+    ///METODOS
+        void Mostrar();
+        void Cargar();
+};
+
+void ViajeAnioActual::Mostrar()
+{
+    if(Estado == true){
+    cout<<"NUMERO DE VIAJE: "<< NroViaje << endl;
+    cout<<"NUMERO DE TARJETA: "<< NroTarjeta << endl;
+    cout<<"MEDIO DE TRANSPORTE: "<< MedioTransporte << endl;
+    cout << "FECHA DEL VIAJE: "; FechaDelViaje.Mostrar();
+    cout << endl;
+    cout<<"IMPORTE DEL VIAJE: " << ImporteDelViaje << endl;
+    }
+}
+
+class ArchivoViajesAnioActual
+{
+    private:
+        char nombre[30];
+    public:
+        ///CONSTRUCTOR: INICIALIZAR EL ARCHIVO CON EL NOMBRE QUE PASAMOS POR PARAMETRO
+        ArchivoViajesAnioActual(const char *n = "ViajesAnioActual.dat"){strcpy(nombre, n);}
+        ///METODOS DE LA CLASE (QUE ACCIONES VA A REALIZAR EL ARCHIVO QUE MANIPULA LOS VIAJES)
+        bool grabarRegistro(ViajeAnioActual obj);
+        ViajeAnioActual leerRegistro(int pos);
+        int buscarRegistro(int num);
+        int contarRegistros();
+        bool modificarRegistro(ViajeAnioActual obj, int pos);
+        bool listarRegistros();
+        /*void AcumularImporteEnMeses(int mes, float importeDelMes);
+        void MostrarMesMayorRecaudacion(ArchivoViajes obj); */ ///NO PUDE HACERLO
+};
+
+bool ArchivoViajesAnioActual::grabarRegistro(ViajeAnioActual obj)
+{
+    FILE *p;
+    p=fopen(nombre, "ab");
+    if(p==NULL) return false;
+    bool escribio=fwrite(&obj, sizeof (ViajeAnioActual), 1, p);
+    fclose(p);
+    return escribio;
+}
+
+bool ArchivoViajesAnioActual::listarRegistros()
+{
+    FILE *p;
+    ViajeAnioActual obj;
+    p=fopen(nombre, "rb");
+    if(p==NULL) return false;
+    while(fread(&obj, sizeof obj, 1, p)==1)
+    {
+        obj.Mostrar();
+        cout<<endl;
+    }
+    fclose(p);
+    return true;
+}
+
+///DEFINICION METODOS CLASE TARJETA
 void Tarjeta::Cargar()
 {
     cout << "NUMERO DE TARJETA: ";
@@ -127,22 +308,7 @@ void Tarjeta::Mostrar()
     }
 }
 
-class ArchivoTarjetas
-{
-    private:
-        char nombre[30];
-    public:
-    ///CONSTRUCTOR: INICIALIZAR EL ARCHIVO CON EL NOMBRE QUE PASAMOS POR PARAMETRO
-        ArchivoTarjetas(const char * n = "Tarjetas.dat"){strcpy(nombre, n);}
-    ///METODOS DE LA CLASE (QUE ACCIONES VA A REALIZAR EL ARCHIVO QUE MANIPULA LAS TARJETAS)
-        bool grabarRegistro(Tarjeta obj);
-        Tarjeta leerRegistro(int pos);
-        int buscarRegistro(int num);
-        int contarRegistros();
-        bool modificarRegistro(Tarjeta obj, int pos);
-        bool listarRegistros();
-};
-
+///DEFINICION METODOS CLASE ARCHIVO TARJETAS
 bool ArchivoTarjetas::grabarRegistro(Tarjeta obj)
 {
     FILE *p;
@@ -152,7 +318,6 @@ bool ArchivoTarjetas::grabarRegistro(Tarjeta obj)
     fclose(p);
     return escribio;
 }
-
 
 bool ArchivoTarjetas::listarRegistros()
 {
@@ -169,7 +334,7 @@ bool ArchivoTarjetas::listarRegistros()
     return true;
 }
 
-int ArchivoTarjetas::buscarRegistro(int num)
+int ArchivoTarjetas::buscarRegistro(int num) ///DEVUELVE LA POSICION DEL REGISTRO EN EL ARCHIVO
 {
     FILE *p;
     Tarjeta obj;
@@ -189,7 +354,7 @@ int ArchivoTarjetas::buscarRegistro(int num)
     return -2;
 }
 
-Tarjeta ArchivoTarjetas::leerRegistro(int pos)
+Tarjeta ArchivoTarjetas::leerRegistro(int pos) ///DEVUELVE EL OBJETO PASANDOLE LA POSICION
 {
     FILE *p;
     Tarjeta obj;
@@ -222,6 +387,8 @@ int ArchivoTarjetas::contarRegistros()
     fclose(p);
     return tam/sizeof(Tarjeta);
 }
+
+///FUNCIONES GLOBALES DE TARJETA
 
 void altaTarjeta(){
     Tarjeta reg;
@@ -278,54 +445,10 @@ void modificarSaldoTarjeta(){
     cout << "SALDO ACTUALIZADO CORRECTAMENTE" << endl;
 }
 
-
-///ACA EMPIEZA LO RELACIONADO A VIAJES
-
-class Viaje
-{
-    private:
-        int NroViaje;
-        int NroTarjeta;
-        int MedioTransporte;
-        Fecha FechaDelViaje;
-        float ImporteDelViaje;
-        bool Estado;
-        int cuantosViajesPorTransporte[3] = {};
-    public:
-    ///CONSTRUCTOR
-        Viaje(int NroViaje = 0, int NroTarjeta = 0, int MedioTransporte = 0, Fecha f = Fecha(), float ImporteDelViaje = 0, bool Estado = true)
-        {
-            NroViaje = 0;
-            NroTarjeta = 0;
-            MedioTransporte = 0;
-            FechaDelViaje = f;
-            ImporteDelViaje = 0;
-            Estado = true;
-        }
-    ///SETTERS
-        void setNroViaje(int nroViaje){NroViaje = nroViaje;}
-        void setNroTarjeta(int nroTarjeta){NroTarjeta = nroTarjeta;}
-        void setMedioTransporte(int medioTransporte){MedioTransporte = medioTransporte;}
-        void setFechaDelViaje(Fecha fechaDelViaje){FechaDelViaje = fechaDelViaje;}
-        void setImporteDelViaje(float importeDelViaje){ImporteDelViaje = importeDelViaje;}
-        void setEstado(bool estado){Estado = estado;}
-
-    ///GETTERS
-        int getNroViaje(){return NroViaje;}
-        int getNroTarjeta(){return NroTarjeta;}
-        int getMedioTransporte(){return MedioTransporte;}
-        Fecha getFechaDelViaje(){return FechaDelViaje;}
-        float getImporteDelViaje(){return ImporteDelViaje;}
-        bool getEstado(){return Estado;}
-
-    ///METODOS
-        void Cargar();
-        void Mostrar();
-        void CuantosViajesEnCadaTransporte(Viaje obj, int numero);
-};
-
+///DEFINICION METODOS CLASE VIAJE
 void Viaje::Cargar()
 {
+    ArchivoViajes archiViajes;
     cout << "NUMERO DE VIAJE: ";
     cin >> NroViaje;
     if(NroViaje < 1)
@@ -355,6 +478,9 @@ void Viaje::Cargar()
 
     cout << "INGRESE IMPORTE DEL VIAJE: ";
     cin >> ImporteDelViaje;
+    /*if(FechaDelViaje.getAnio() != 2024 && MedioTransporte == 2){
+        archiViajes.AcumularImporteEnMeses((FechaDelViaje.getMes()) - 1, ImporteDelViaje);
+    }*/ ///NO PUDE HACERLO
     setEstado(true);
 }
 
@@ -364,12 +490,13 @@ void Viaje::Mostrar()
     cout<<"NUMERO DE VIAJE: "<< NroViaje << endl;
     cout<<"NUMERO DE TARJETA: "<< NroTarjeta << endl;
     cout<<"MEDIO DE TRANSPORTE: "<< MedioTransporte << endl;
-    FechaDelViaje.Mostrar();
+    cout << "FECHA DEL VIAJE: "; FechaDelViaje.Mostrar();
     cout << endl;
     cout<<"IMPORTE DEL VIAJE: " << ImporteDelViaje << endl;
     }
 }
 
+///PUNTO A
 void Viaje::CuantosViajesEnCadaTransporte(Viaje obj, int numero)
 {
     if(obj.getNroTarjeta() != numero)
@@ -380,7 +507,7 @@ void Viaje::CuantosViajesEnCadaTransporte(Viaje obj, int numero)
 
     if(obj.FechaDelViaje.getAnio() != 2023)
     {
-        cout << "El viaje no corresponde al año 2023." << endl;
+        cout << "El numero de tarjeta seleccionado no posee viajes en el año 2023." << endl;
         return;
     }
 
@@ -389,32 +516,55 @@ void Viaje::CuantosViajesEnCadaTransporte(Viaje obj, int numero)
     cout << "CANTIDAD DE VIAJES EL AÑO PASADO EN TREN: " << obj.cuantosViajesPorTransporte[2] << " VIAJES" << endl;
 }
 
-class ArchivoViajes
-{
-    private:
-        char nombre[30];
-    public:
-        ///CONSTRUCTOR: INICIALIZAR EL ARCHIVO CON EL NOMBRE QUE PASAMOS POR PARAMETRO
-        ArchivoViajes(const char *n = "Viajes.dat"){strcpy(nombre, n);}
-        ///METODOS DE LA CLASE (QUE ACCIONES VA A REALIZAR EL ARCHIVO QUE MANIPULA LOS VIAJES)
-        bool grabarRegistro(Viaje obj);
-        Viaje leerRegistro(int pos);
-        int buscarRegistro(int num);
-        int contarRegistros();
-        bool modificarRegistro(Viaje obj, int pos);
-        bool listarRegistros();
-        int buscarRegistroPorNumeroDeTarjeta(int num);
-};
+///PUNTO B
+void ArchivoViajes::ViajeConMenorImporte(){
+        ArchivoViajes archiViajes;
+        FILE *p;
+        Viaje obj;
+        p=fopen("Viajes.dat", "rb");
+        float menorImporte;
+        bool bandera = false;
+        int pos=0;
+        if(p==NULL) return;
+        while(fread(&obj, sizeof obj, 1, p)==1) ///SIGNIFICA QUE PUDO LEER EL ARCHIVO SI DEVUELVE 1
+        {
+            if(bandera == false){
+                menorImporte = obj.getImporteDelViaje();
+                bandera = true;
+            }else if(obj.getImporteDelViaje() < menorImporte){
+                menorImporte = obj.getImporteDelViaje();
+                pos++;
+            }
+        }
+        fclose(p);
+        obj = archiViajes.leerRegistro(pos);
+        obj.Mostrar();
+        return;
+    }
 
+ /*PUNTO C
+void ArchivoViajes::AcumularImporteEnMeses(int mes, float importeDelMes){
+    ArchivoViajes archiViajes;
+    archiViajes.acuImporteTotalMesesDelArchivo[mes] += importeDelMes;
+    archiViajes.MostrarMesMayorRecaudacion(archiViajes);
+}
+
+void ArchivoViajes::MostrarMesMayorRecaudacion(ArchivoViajes obj){
+    for(int x = 0; x < 12; x++){
+        cout << acuImporteTotalMesesDelArchivo[x] << endl;
+    }
+}
+*/ ///NO PUDE HACERLO
+
+///DEFINICION METODOS CLASE ARCHIVO VIAJES
 bool ArchivoViajes::grabarRegistro(Viaje obj){
     FILE *p;
-    p=fopen(nombre, "ab");
+    p=fopen(nombre, "wb");
     if(p==NULL) return false;
     bool escribio=fwrite(&obj, sizeof (Viaje), 1, p);
     fclose(p);
     return escribio;
 }
-
 
 bool ArchivoViajes::listarRegistros(){
     FILE *p;
@@ -499,13 +649,39 @@ int ArchivoViajes::contarRegistros(){
         fclose(p);
         return tam/sizeof(Viaje);
     }
+
+///FUNCIONES GLOBALES DE VIAJE
 void altaViaje(){
     Viaje reg;
     ArchivoViajes archiViajes("Viajes.dat");
     reg.Cargar();
     archiViajes.grabarRegistro(reg);
 }
+///PUNTO D GENERAR UN ARCHIVO CON LOS REGISTROS DE LOS VIAJES DEL AÑO ACTUAL
 
+void generarArchivoNuevo(){
+    Viaje reg;
+    ArchivoViajes archiViajes; ///Para contar la cantidad de registros
+    ViajeAnioActual aux; ///Para setear nombres a la clase ViajeAnioActual
+    ArchivoViajesAnioActual archiNuevo; ///Grabar registro en el nuevo archivo ArchivoAnioActual
+    int cantReg=archiViajes.contarRegistros();
+    for(int i=0;i<cantReg;i++){
+        reg=archiViajes.leerRegistro(i);
+
+        if(reg.getFechaDelViaje().getAnio() == 2024){
+            aux.setNroViaje(reg.getNroViaje()); // reg es de Empresa // aux es de EmpresaMuni
+            aux.setNroTarjeta(reg.getNroTarjeta());
+            aux.setMedioTransporte(reg.getMedioTransporte());
+            aux.setFechaDelViaje(reg.getFechaDelViaje());
+            aux.setImporteDelViaje(reg.getImporteDelViaje());
+            aux.setEstado(true);
+            archiNuevo.grabarRegistro(aux);
+        }
+    }
+
+}
+
+///MANAGERS DE AMBOS MENUS
 void ManagerMenuTarjetas(){
         ArchivoTarjetas archiTarjetas;
         Tarjeta aux;
@@ -567,6 +743,7 @@ void ManagerMenuViajes(){
         Viaje aux, variableViaje;
         ArchivoViajes archiViajes("Viajes.dat");
         int numeroDeTarjeta, pos, cantidadRegistros;
+        ArchivoViajesAnioActual archiNuevo;
 
         while(true){
             ///DECLARO ESTAS VARIABLES PARA MANIPULAR LOS ARCHIVOS "TARJETAS.DAT" Y "VIAJES.DAT"
@@ -574,11 +751,14 @@ void ManagerMenuViajes(){
             system("cls");
             cout<<"MENU DE VIAJES"<<endl;
             cout<<"--------------"<<endl;
-            cout<<"1 - CANTIDAD DE VIAJES REALIZADOS EN CADA UNO DE LOS MEDIOS DE TRANSPORTE EL AÑO PASADO (2023) POR TARJETA"<<endl;
+            cout<<"1 - ALTA DE VIAJE"<<endl;
             cout<<"2 - LISTAR VIAJES"<<endl;
-            cout<<"3 - ALTA DE VIAJE"<<endl;
-            cout<<"4 - CONTAR CANTIDAD DE VIAJES"<<endl;
-            cout<<"5 - BUSCAR TARJETA POR NUMERO"<<endl;
+            cout<<"3 - CANTIDAD DE VIAJES REALIZADOS EN CADA UNO DE LOS MEDIOS DE TRANSPORTE EL AÑO PASADO (2023) POR TARJETA"<<endl;
+            cout<<"4 - VIAJE CON MENOR IMPORTE"<<endl;
+            cout<<"5 - MES DE MAYOR RECAUDACION VIAJES EN SUBTE AÑOS 2020-2021-2022-2023"<<endl;
+            cout<<"6 - CONTAR REGISTROS"<<endl;
+            cout<<"7 - CREAR NUEVO ARCHIVO CON REGISTROS DEL AÑO ACTUAL (2024)"<<endl;
+            cout<<"8 - LISTAR ARCHIVO CON REGISTROS DEL AÑO ACTUAL"<<endl;
             cout<<"0 - VOLVER AL MENU PRINCIPAL"<<endl;
             cout<<"----------------------------------------"<<endl;
             cout<<"INGRESE LA OPCION: ";
@@ -586,6 +766,13 @@ void ManagerMenuViajes(){
             system("cls");
             switch(opc){
                 case 1:
+                    altaViaje();
+                    break;
+                case 2:
+                    archiViajes.listarRegistros();
+                    system("pause");
+                    break;
+                case 3:
                     cout << "INGRESE NUMERO DE TARJETA A ANALIZAR: " << endl;
                     cin >> numeroDeTarjeta;
                     pos = archiViajes.buscarRegistroPorNumeroDeTarjeta(numeroDeTarjeta);
@@ -593,21 +780,27 @@ void ManagerMenuViajes(){
                     aux.CuantosViajesEnCadaTransporte(variableViaje, numeroDeTarjeta);
                     system("pause");
                     break;
-                case 2:
-                    archiViajes.listarRegistros();
-                    system("pause");
-                    break;
-                case 3:
-                    altaViaje();
-                    break;
                 case 4:
-                    cantidadRegistros = archiViajes.contarRegistros();
-                    cout << cantidadRegistros;
+                    archiViajes.ViajeConMenorImporte();
                     system("pause");
                     break;
                 case 5:
+                    ///archiViajes.MostrarMesMayorRecaudacion(); NO PUDE HACERLO
                     system("pause");
                     break;
+                case 6:
+                    cantidadRegistros = archiViajes.contarRegistros();
+                    cout << cantidadRegistros << endl;
+                    system("pause");
+                    return;
+                case 7:
+                    generarArchivoNuevo();
+                    system("pause");
+                    return;
+                case 8:
+                    archiNuevo.listarRegistros();
+                    system("pause");
+                    return;
                 case 0:
                     return;
                 default:
@@ -618,7 +811,6 @@ void ManagerMenuViajes(){
 }
 
 ///MAIN
-
     int main()
     {
         setlocale(LC_ALL, "spanish");
@@ -645,6 +837,7 @@ void ManagerMenuViajes(){
         }while(eleccion != 0);
 
         cout << "¡GRACIAS POR UTILIZAR SISTEMAS GAUNA!" << endl;
+        system("pause");
 
         system("pause>nul");
         return 0;
